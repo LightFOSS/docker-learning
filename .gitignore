@@ -1,0 +1,6 @@
+# No subir imágenes de Docker construidas localmente
+*.tar
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
