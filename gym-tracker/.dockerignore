@@ -1,0 +1,31 @@
+# Archivos de datos
+gym_data.json
+*.json
+
+# Binarios compilados
+gym-tracker
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Archivos de test
+*.test
+*.out
+
+# Archivos de Go
+go.sum
+
+# Directorios
+.git
+.gitignore
+README.md
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.log
