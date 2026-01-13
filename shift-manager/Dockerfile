@@ -29,6 +29,9 @@ RUN mkdir -p /root/.shift-manager
 # Volumen para persistir los datos
 VOLUME ["/root/.shift-manager"]
 
+# Exponer puerto para el servidor web
+EXPOSE 8080
+
 # Comando por defecto
 ENTRYPOINT ["./shift-manager"]
 CMD ["help"]

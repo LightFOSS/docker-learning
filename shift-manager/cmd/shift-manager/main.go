@@ -31,6 +31,8 @@ func main() {
 		err = commands.View(args)
 	case "stats":
 		err = commands.Stats(args)
+	case "serve":
+		err = commands.Serve(args)
 	case "help", "-h", "--help":
 		printHelp()
 	case "version", "-v", "--version":
@@ -56,6 +58,7 @@ func printUsage() {
 	fmt.Println("  list         Listar todos los turnos y eventos")
 	fmt.Println("  view         Ver calendario semanal o mensual")
 	fmt.Println("  stats        Ver estadísticas de horas trabajadas")
+	fmt.Println("  serve        Iniciar servidor web")
 	fmt.Println("  help         Mostrar ayuda detallada")
 	fmt.Println("  version      Mostrar versión")
 	fmt.Println()
@@ -132,12 +135,29 @@ func printHelp() {
 	fmt.Println("      shift-manager stats -period all")
 	fmt.Println()
 
+	fmt.Println("  serve - Iniciar servidor web")
+	fmt.Println("    Uso: shift-manager serve [-port PORT]")
+	fmt.Println("    Opciones:")
+	fmt.Println("      -port    Puerto del servidor (por defecto: 8080)")
+	fmt.Println()
+	fmt.Println("    Ejemplo:")
+	fmt.Println("      shift-manager serve")
+	fmt.Println("      shift-manager serve -port 3000")
+	fmt.Println()
+	fmt.Println("    El servidor mostrará:")
+	fmt.Println("      • Calendario visual semanal con turnos y eventos")
+	fmt.Println("      • Estadísticas de horas trabajadas")
+	fmt.Println("      • Navegación entre semanas")
+	fmt.Println("      • Lista detallada de todas las actividades")
+	fmt.Println()
+
 	fmt.Println("CARACTERÍSTICAS:")
 	fmt.Println("  • Detección automática de conflictos de horarios")
 	fmt.Println("  • Cálculo de horas trabajadas por turno, semana y mes")
-	fmt.Println("  • Calendario visual semanal y mensual")
+	fmt.Println("  • Calendario visual semanal y mensual (CLI y Web)")
 	fmt.Println("  • Soporte para turnos normales y partidos")
 	fmt.Println("  • Almacenamiento local en JSON")
+	fmt.Println("  • Interfaz web responsive con navegación")
 	fmt.Println()
 	fmt.Println("Los datos se guardan en: ~/.shift-manager/data.json")
 }

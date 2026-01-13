@@ -6,11 +6,12 @@
 
 - ✅ Agregar turnos de trabajo con fecha, hora de entrada/salida y tipo (normal/partido)
 - ✅ Agregar eventos personales (gym, terapia, clases, etc.)
-- ✅ Ver calendario semanal y mensual con vista visual
+- ✅ Ver calendario semanal y mensual con vista visual (CLI y Web)
 - ✅ Listar todos los turnos y eventos con filtros
 - ✅ Detección automática de conflictos de horarios
 - ✅ Calcular total de horas trabajadas por semana/mes
 - ✅ Almacenamiento local en JSON
+- 🌐 Servidor web con interfaz HTML responsive
 - 🐳 Completamente containerizable con Docker
 
 ## Instalación
@@ -136,7 +137,32 @@ shift-manager stats -period week -date 2026-01-15
 - `-period`: Período de estadísticas (`week`, `month`, `all`) - por defecto: `week`
 - `-date`: Fecha de referencia (formato: YYYY-MM-DD) - por defecto: hoy
 
-#### 6. Ayuda y versión
+#### 6. Servidor web
+
+```bash
+# Iniciar servidor web en puerto 8080 (por defecto)
+shift-manager serve
+
+# Iniciar en puerto personalizado
+shift-manager serve -port 3000
+```
+
+El servidor web mostrará una interfaz HTML con:
+- 📅 **Calendario visual semanal** - Vista de 7 días con todas las actividades
+- 📊 **Estadísticas en tiempo real** - Total de horas, promedio diario, contadores
+- ⬅️➡️ **Navegación entre semanas** - Botones para navegar entre semanas
+- 📋 **Lista detallada** - Todos los turnos y eventos de la semana
+- 🎨 **Diseño responsive** - Se adapta a móvil, tablet y desktop
+- 🌈 **Colores distintivos** - Diferentes colores para turnos y eventos
+
+**Opciones:**
+- `-port`: Puerto del servidor - por defecto: `8080`
+
+**Acceso:**
+- Abrir navegador en `http://localhost:8080`
+- Con Docker: `http://localhost:8080` (mapear puerto con `-p 8080:8080`)
+
+#### 7. Ayuda y versión
 
 ```bash
 # Ver ayuda completa
@@ -210,6 +236,19 @@ docker run --rm shift-manager:latest help
 
 # Ver calendario
 docker run --rm -v ~/.shift-manager:/root/.shift-manager shift-manager:latest view -period week
+
+# Iniciar servidor web (mapear puerto 8080)
+docker run --rm -p 8080:8080 -v ~/.shift-manager:/root/.shift-manager shift-manager:latest serve
+
+# Iniciar servidor web en segundo plano
+docker run -d --name shift-manager-web -p 8080:8080 -v ~/.shift-manager:/root/.shift-manager shift-manager:latest serve
+
+# Detener servidor web en segundo plano
+docker stop shift-manager-web
+docker rm shift-manager-web
+```
+
+**Nota:** Para el servidor web, asegúrate de mapear el puerto con `-p 8080:8080` y luego acceder a `http://localhost:8080` en tu navegador.
 ```
 
 ## Estructura del proyecto
@@ -229,9 +268,13 @@ shift-manager/
 │   │   ├── add_event.go         # Comando add-event
 │   │   ├── view.go              # Comando view
 │   │   ├── stats.go             # Comando stats
-│   │   └── list.go              # Comando list
+│   │   ├── list.go              # Comando list
+│   │   └── serve.go             # Comando serve (servidor web)
 │   └── utils/
 │       └── utils.go             # Utilidades
+├── web/
+│   └── templates/
+│       └── index.html           # Template HTML con CSS
 ├── Dockerfile                   # Dockerfile multi-stage
 ├── go.mod
 ├── go.sum
